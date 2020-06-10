@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MultiplayerTest": {
+      "commandName": "Project",
+      "commandLineArgs": "server"
+    }
+  }
+}
