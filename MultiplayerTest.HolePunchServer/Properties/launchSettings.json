@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "MultiplayerTest.HolePunchServer": {
+      "commandName": "Project",
+      "commandLineArgs": "5463"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

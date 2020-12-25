@@ -23,12 +23,34 @@ namespace MultiplayerTest
                 throw new InvalidOperationException();
             }
 
-            var listener = new EventBasedNetListener();
-            manager = new NetManager(listener);
-            manager.Start();
-            manager.Connect(endpoint, port, nameof(MultiplayerTest));
+            var natPunchListener = new EventBasedNatPunchListener();
+            natPunchListener.NatIntroductionSuccess += (endpoint, addressType, token) =>
+            {
+                //if (addressType == NatAddressType.External)
+                {
+                    manager.Connect(endpoint, nameof(MultiplayerTest));
+                }
+            };
 
-            listener.PeerConnectedEvent += peer => server = peer;
+            var listener = new EventBasedNetListener();
+            manager = new NetManager(listener)
+            {
+                IPv6Enabled = IPv6Mode.Disabled,
+                NatPunchEnabled = true,
+            };
+
+            manager.NatPunchModule.Init(natPunchListener);
+
+            manager.Start();
+            //manager.Connect(endpoint, port, nameof(MultiplayerTest));
+            manager.NatPunchModule.SendNatIntroduceRequest("multiplayer-test.westeurope.azurecontainer.io", 5463, "Test");
+
+            listener.PeerConnectedEvent += peer =>
+            {
+                Console.WriteLine($"Connected to server {peer.EndPoint}");
+
+                server = peer;
+            };
 
             var processor = new NetPacketProcessor();
             processor.RegisterNestedType<Order>(() => new Order());
@@ -93,6 +115,7 @@ namespace MultiplayerTest
         {
             while (true)
             {
+                manager.NatPunchModule.PollEvents();
                 manager.PollEvents();
                 Thread.Sleep(100);
             }
