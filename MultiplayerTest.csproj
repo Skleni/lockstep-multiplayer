@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="LiteNetLib" Version="0.9.3.2" />
+    <PackageReference Include="Open.NAT.Core" Version="2.1.0.5" />
     <PackageReference Include="softaware.ViewPort" Version="1.0.0" />
   </ItemGroup>
 

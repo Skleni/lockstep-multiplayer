@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
+using System.Threading.Tasks;
 using MultiplayerTest.Packets;
+using Open.Nat;
 using softaware.ViewPort.Commands;
 using softaware.ViewPort.Core;
 
@@ -33,6 +35,20 @@ namespace MultiplayerTest
             ConnectCommand = new Command(Connect);
 
             Players = new ObservableCollection<Player>();
+        }
+
+        public async Task InitAsync()
+        {
+            var discoverer = new NatDiscoverer();
+            var cts = new CancellationTokenSource(10000);
+            var device = await discoverer.DiscoverDeviceAsync(PortMapper.Upnp, cts);
+            var mapping = await device.GetSpecificMappingAsync(Protocol.Udp, 5463);
+            if (mapping != null)
+            {
+                await device.DeletePortMapAsync(mapping);
+            }
+
+            await device.CreatePortMapAsync(new Mapping(Protocol.Udp, 15000, 5463, "Multiplayer test"));
         }
 
         public bool IsServer { get; }

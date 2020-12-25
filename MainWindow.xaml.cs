@@ -16,6 +16,8 @@ namespace MultiplayerTest
             var isServer = Environment.GetCommandLineArgs().Contains("server");
             Title = isServer ? "Server" : "Client";
             DataContext = new MainViewModel(isServer);
+
+            this.Loaded += async (s, e) => await ((MainViewModel)DataContext).InitAsync();
         }
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
