@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using MultiplayerTest.Packets;
@@ -42,13 +44,16 @@ namespace MultiplayerTest
             var discoverer = new NatDiscoverer();
             var cts = new CancellationTokenSource(10000);
             var device = await discoverer.DiscoverDeviceAsync(PortMapper.Upnp, cts);
+            var ip = await device.GetExternalIPAsync();
+            Debug.WriteLine(ip);
             var mapping = await device.GetSpecificMappingAsync(Protocol.Udp, 5463);
             if (mapping != null)
             {
                 await device.DeletePortMapAsync(mapping);
             }
 
-            await device.CreatePortMapAsync(new Mapping(Protocol.Udp, 15000, 5463, "Multiplayer test"));
+            var localIp = IPAddress.Parse(LiteNetLib.NetUtils.GetLocalIp(LiteNetLib.LocalAddrType.IPv4));
+            await device.CreatePortMapAsync(new Mapping(Protocol.Udp, localIp, 15000, 5463, 60000, "Multiplayer test"));
         }
 
         public bool IsServer { get; }
