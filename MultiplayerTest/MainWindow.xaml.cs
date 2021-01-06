@@ -15,7 +15,20 @@ namespace MultiplayerTest
             InitializeComponent();
             var isServer = Environment.GetCommandLineArgs().Contains("server");
             Title = isServer ? "Server" : "Client";
-            DataContext = new MainViewModel(isServer);
+            var vm = new MainViewModel(isServer);
+            DataContext = vm;
+
+            Loaded += (s, e) =>
+            {
+                if (isServer)
+                {
+                    vm.StartServerCommand.Execute();
+                }
+                else
+                {
+                    vm.ConnectCommand.Execute();
+                }
+            };
         }
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)

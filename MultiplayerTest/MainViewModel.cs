@@ -95,7 +95,7 @@ namespace MultiplayerTest
         private void Connect()
         {
             client = new Client();
-            client.Connect(Endpoint, Port);
+            client.Connect();
             client.OrderReceived += OrderReceived;
 
             client.GameStarted += players =>

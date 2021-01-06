@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using LiteNetLib;
 using LiteNetLib.Utils;
@@ -16,7 +17,7 @@ namespace MultiplayerTest
         public event Action<int> GameStarted;
         public event Action<Order> OrderReceived;
 
-        public void Connect(string endpoint, int port)
+        public void Connect()
         {
             if (manager != null)
             {
@@ -26,6 +27,7 @@ namespace MultiplayerTest
             var natPunchListener = new EventBasedNatPunchListener();
             natPunchListener.NatIntroductionSuccess += (endpoint, addressType, token) =>
             {
+                Debug.WriteLine($"Client: Introduced to {endpoint} ({addressType})");
                 //if (addressType == NatAddressType.External)
                 {
                     manager.Connect(endpoint, nameof(MultiplayerTest));
@@ -35,7 +37,6 @@ namespace MultiplayerTest
             var listener = new EventBasedNetListener();
             manager = new NetManager(listener)
             {
-                IPv6Enabled = IPv6Mode.Disabled,
                 NatPunchEnabled = true,
             };
 
@@ -44,6 +45,8 @@ namespace MultiplayerTest
             manager.Start();
             //manager.Connect(endpoint, port, nameof(MultiplayerTest));
             manager.NatPunchModule.SendNatIntroduceRequest("multiplayer-test.westeurope.azurecontainer.io", 5463, "Test");
+
+            listener.ConnectionRequestEvent += request => request.AcceptIfKey(nameof(MultiplayerTest));
 
             listener.PeerConnectedEvent += peer =>
             {
@@ -87,6 +90,11 @@ namespace MultiplayerTest
             };
             
             thread.Start();
+        }
+
+        private void Listener_ConnectionRequestEvent(ConnectionRequest request)
+        {
+            throw new NotImplementedException();
         }
 
         public void SendOrder(double targetX, double targetY)

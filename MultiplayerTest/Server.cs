@@ -30,7 +30,8 @@ namespace MultiplayerTest
             var natPunchListener = new EventBasedNatPunchListener();
             natPunchListener.NatIntroductionSuccess += (endpoint, addressType, token) =>
             {
-                Debug.WriteLine($"Introduced to {endpoint} ({addressType})");
+                Debug.WriteLine($"Server: Introduced to {endpoint} ({addressType})");
+                manager.Connect(endpoint, nameof(MultiplayerTest));
                 //if (addressType == NatAddressType.External)
                 //{
                 //    manager.Connect(endpoint, nameof(MultiplayerTest));
@@ -41,7 +42,6 @@ namespace MultiplayerTest
 
             manager = new NetManager(listener)
             {
-                IPv6Enabled = IPv6Mode.Disabled,
                 NatPunchEnabled = true
             };
 

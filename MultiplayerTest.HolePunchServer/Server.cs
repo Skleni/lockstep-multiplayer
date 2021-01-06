@@ -21,7 +21,6 @@ namespace MultiplayerTest.HolePunchServer
 
             manager = new NetManager(listener)
             {
-                IPv6Enabled = IPv6Mode.Disabled,
                 NatPunchEnabled = true
             };
 

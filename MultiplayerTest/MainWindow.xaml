@@ -30,16 +30,16 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="Port" Grid.Row="0" Grid.Column="0" Visibility="{Binding IsServer, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        <!--<TextBlock Text="Port" Grid.Row="0" Grid.Column="0" Visibility="{Binding IsServer, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Port}" Visibility="{Binding IsServer, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-        <Button Content="Start server" Grid.Row="1" Grid.Column="1" Command="{Binding StartServerCommand}" Visibility="{Binding IsServer, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        <Button Content="Start server" Grid.Row="1" Grid.Column="1" Command="{Binding StartServerCommand}" Visibility="{Binding IsServer, Converter={StaticResource BooleanToVisibilityConverter}}"/>-->
         <Button Content="Start game" Grid.Row="2" Grid.Column="1" Command="{Binding StartGameCommand}" Visibility="{Binding IsServer, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
-        <TextBlock Text="Address" Grid.Row="0" Grid.Column="0" Visibility="{Binding IsClient, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <!--<TextBlock Text="Address" Grid.Row="0" Grid.Column="0" Visibility="{Binding IsClient, Converter={StaticResource BooleanToVisibilityConverter}}" />
         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Endpoint}" Visibility="{Binding IsClient, Converter={StaticResource BooleanToVisibilityConverter}}" />
         <TextBlock Text="Port" Grid.Row="1" Grid.Column="0" Visibility="{Binding IsClient, Converter={StaticResource BooleanToVisibilityConverter}}" />
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Port}" Visibility="{Binding IsClient, Converter={StaticResource BooleanToVisibilityConverter}}" />
-        <Button Content="Connect" Grid.Row="2" Grid.Column="1" Command="{Binding ConnectCommand}" Visibility="{Binding IsClient, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <Button Content="Connect" Grid.Row="2" Grid.Column="1" Command="{Binding ConnectCommand}" Visibility="{Binding IsClient, Converter={StaticResource BooleanToVisibilityConverter}}" />-->
 
         <Border BorderBrush="Black" BorderThickness="1" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="3" Grid.ColumnSpan="2" Margin="0,20,0,0">
             <Viewbox>
