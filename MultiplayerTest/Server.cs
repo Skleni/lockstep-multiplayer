@@ -31,7 +31,7 @@ namespace MultiplayerTest
             natPunchListener.NatIntroductionSuccess += (endpoint, addressType, token) =>
             {
                 Debug.WriteLine($"Server: Introduced to {endpoint} ({addressType})");
-                manager.Connect(endpoint, nameof(MultiplayerTest));
+                //manager.Connect(endpoint, nameof(MultiplayerTest));
                 //if (addressType == NatAddressType.External)
                 //{
                 //    manager.Connect(endpoint, nameof(MultiplayerTest));
